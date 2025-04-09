@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.sample.core.domain.Book;
 import com.sample.core.service.IBookService;
@@ -20,6 +21,24 @@ public class MainController {
 
 	@Autowired
 	IBookService bookService;
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	@GetMapping("/")
+	public ResponseEntity<Book> demo() {
+		String url = "http://localhost:8080/book";
+		Book requestDto = new Book();
+		requestDto.setName("C++");
+		requestDto.setPages(500);
+		requestDto.setAuthor("mak");
+
+		return ResponseEntity.ok(restTemplate.postForObject(url, requestDto, Book.class));
+
+		// HttpEntity<Book> requestEntity = new HttpEntity<Book>(requestDto);
+		// return restTemplate.exchange(url, HttpMethod.POST, requestEntity,
+		// Book.class);
+	}
 
 	@PostMapping("/book")
 	public ResponseEntity<Book> addBook(@RequestBody Book book) {
@@ -32,13 +51,13 @@ public class MainController {
 	}
 
 	@GetMapping("/book/{bookId}")
-	public ResponseEntity<Book> getBook(@PathVariable int id) {
-		return ResponseEntity.ok().body(bookService.getBook(id));
+	public ResponseEntity<Book> getBook(@PathVariable int bookId) {
+		return ResponseEntity.ok().body(bookService.getBook(bookId));
 	}
 
 	@DeleteMapping("/book/{bookId}")
-	public ResponseEntity<String> deleteBook(@PathVariable int id) {
-		bookService.deleteBook(id);
+	public ResponseEntity<String> deleteBook(@PathVariable int bookId) {
+		bookService.deleteBook(bookId);
 		return ResponseEntity.ok().body("Book deleted successfully");
 	}
 

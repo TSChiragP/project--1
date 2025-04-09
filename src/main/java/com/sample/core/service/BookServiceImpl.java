@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sample.core.domain.Book;
+import com.sample.core.exception.BookNotFoundException;
 import com.sample.core.repository.BookRepository;
 
+@Service
 public class BookServiceImpl implements IBookService {
 
 	@Autowired
@@ -20,15 +23,14 @@ public class BookServiceImpl implements IBookService {
 
 	@Override
 	public List<Book> getBooks() {
-
 		return bookRepository.findAll();
 	}
 
 	@Override
 	public Book getBook(int id) {
-		Optional<Book> optionalBook = bookRepository.findById(id);
-
-		return optionalBook.get();
+		Book book = bookRepository.findById(id)
+				.orElseThrow(() -> new BookNotFoundException("book not found with id : " + id));
+		return book;
 
 	}
 
