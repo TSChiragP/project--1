@@ -16,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 import com.sample.core.domain.Book;
 import com.sample.core.service.IBookService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class MainController {
 
@@ -25,23 +27,23 @@ public class MainController {
 	@Autowired
 	RestTemplate restTemplate;
 
-	@GetMapping("/")
-	public ResponseEntity<Book> demo() {
-		String url = "http://localhost:8080/book";
-		Book requestDto = new Book();
-		requestDto.setName("C++");
-		requestDto.setPages(500);
-		requestDto.setAuthor("mak");
-
-		return ResponseEntity.ok(restTemplate.postForObject(url, requestDto, Book.class));
-
-		// HttpEntity<Book> requestEntity = new HttpEntity<Book>(requestDto);
-		// return restTemplate.exchange(url, HttpMethod.POST, requestEntity,
-		// Book.class);
-	}
+//	@GetMapping("/")
+//	public ResponseEntity<Book> demo() {
+//		String url = "http://localhost:8080/book";
+//		Book requestDto = new Book();
+//		requestDto.setName("scala");
+//		requestDto.setPages(250);
+//		requestDto.setAuthor("abcdefg");
+//
+//		return ResponseEntity.ok(restTemplate.postForObject(url, requestDto, Book.class));
+//
+//		// HttpEntity<Book> requestEntity = new HttpEntity<Book>(requestDto);
+//		// return restTemplate.exchange(url, HttpMethod.POST, requestEntity,
+//		// Book.class);
+//	}
 
 	@PostMapping("/book")
-	public ResponseEntity<Book> addBook(@RequestBody Book book) {
+	public ResponseEntity<Book> addBook(@Valid @RequestBody Book book) {
 		return ResponseEntity.ok().body(bookService.addBook(book));
 	}
 
