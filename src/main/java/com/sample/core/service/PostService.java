@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import com.sample.core.domain.Posts;
 import com.sample.core.domain.Users;
+import com.sample.core.exception.CustomAccessDeniedException;
 import com.sample.core.exception.PostNotFoundException;
 import com.sample.core.exception.UserNotFoundException;
 import com.sample.core.repository.PostRepository;
@@ -44,12 +44,13 @@ public class PostService {
 		postRepository.save(oldPost);
 	}
 
-	public void deletePost(Integer postId, Principal principal) throws PostNotFoundException {
+	public void deletePost(Integer postId, Principal principal)
+			throws PostNotFoundException, CustomAccessDeniedException {
 		Posts post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found !!"));
 		if (post.getAuthor().getEmail().equals(principal.getName())) {
 			postRepository.deleteById(postId);
 		} else {
-			throw new AccessDeniedException("You dont have access to delete this post");
+			throw new CustomAccessDeniedException("You dont have access to delete this post");
 		}
 	}
 

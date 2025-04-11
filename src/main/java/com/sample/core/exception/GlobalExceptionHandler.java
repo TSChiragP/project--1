@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 	}
 
-	@ExceptionHandler(exception = AccessDeniedException.class)
+	@ExceptionHandler(exception = CustomAccessDeniedException.class)
 	public String handleAccessDeniedException(RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("accessDenied", true);
 		return "redirect:/";

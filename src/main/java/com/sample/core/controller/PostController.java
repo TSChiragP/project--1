@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sample.core.domain.Posts;
 import com.sample.core.domain.Users;
+import com.sample.core.exception.CustomAccessDeniedException;
 import com.sample.core.exception.PostNotFoundException;
 import com.sample.core.exception.UserNotFoundException;
 import com.sample.core.repository.PostRepository;
+import com.sample.core.repository.UserRepository;
 import com.sample.core.service.PostService;
 import com.sample.core.service.UserService;
 
 @Controller
 public class PostController {
+
+	private final UserRepository userRepository;
 	@Autowired
 	PostRepository postRepository;
 
@@ -30,6 +34,10 @@ public class PostController {
 
 	@Autowired
 	UserService userService;
+
+	PostController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	@GetMapping("/")
 	private String getPosts(Model model, Principal principal) throws UserNotFoundException {
@@ -63,8 +71,9 @@ public class PostController {
 	}
 
 	@GetMapping("/posts/delete/{postId}")
-	private String deletePosts(@PathVariable Integer postId, Principal principal) throws PostNotFoundException {
-		postService.deletePost(postId,principal);
+	private String deletePosts(@PathVariable Integer postId, Principal principal)
+			throws PostNotFoundException, CustomAccessDeniedException {
+		postService.deletePost(postId, principal);
 		return "redirect:/";
 	}
 
