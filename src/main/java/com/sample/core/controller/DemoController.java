@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DemoController {
 
-	@GetMapping("/")
-	public String publicEndpoint() {
-		return "public_home";
-	}
+	/*
+	 * @GetMapping("/") public String publicEndpoint() { return "public_home"; }
+	 */
 
 	@GetMapping("/user/home")
 	public String userEndpoint() {

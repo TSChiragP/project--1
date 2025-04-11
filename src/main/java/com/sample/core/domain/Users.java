@@ -2,11 +2,13 @@ package com.sample.core.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -29,6 +31,9 @@ public class Users {
 	private String password;
 
 	private String roles;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+	private List<Posts> posts;
 
 	public Integer getId() {
 		return id;
@@ -68,6 +73,14 @@ public class Users {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public List<Posts> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Posts> posts) {
+		this.posts = posts;
 	}
 
 }

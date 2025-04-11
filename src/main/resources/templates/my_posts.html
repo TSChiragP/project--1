@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>User Posts</title>
+
+	<style>
+		body {
+			margin: 0;
+			background: #1e1e2f;
+			color: #ffffff;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			padding: 40px 20px;
+		}
+
+		.container {
+			max-width: 1000px;
+			margin: 0 auto;
+		}
+
+		h1 {
+			color: #ffaa00;
+			margin-bottom: 30px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background-color: #2b2b40;
+			border-radius: 10px;
+			overflow: hidden;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+		}
+
+		th,
+		td {
+			padding: 15px;
+			text-align: left;
+			border-bottom: 1px solid #444;
+		}
+
+		th {
+			background-color: #ffaa00;
+			color: #1e1e2f;
+			font-weight: bold;
+		}
+
+		tr:hover {
+			background-color: #3a3a50;
+		}
+
+		.action-btn {
+			text-decoration: none;
+			font-weight: bold;
+			padding: 6px 12px;
+			border-radius: 6px;
+			transition: background-color 0.3s ease;
+		}
+
+		.edit-btn {
+			background-color: #ffaa00;
+			color: #1e1e2f;
+		}
+
+		.edit-btn:hover {
+			background-color: #ffbb33;
+		}
+
+		.delete-btn {
+			background-color: #ff4d4d;
+			color: #ffffff;
+		}
+
+		.delete-btn:hover {
+			background-color: #ff1a1a;
+		}
+
+		#back-btn {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			background-color: #ffaa00;
+			color: #1e1e2f;
+			padding: 10px 16px;
+			border-radius: 8px;
+			text-decoration: none;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<a href="/" id="back-btn">
+			← Back to Home
+		</a>
+		<h1>My Posts</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Created At</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="post : ${userPosts}">
+					<td th:text="${post.title}">Post Title</td>
+					<td th:text="${#temporals.format(post.createdAt, 'dd MMM yyyy HH:mm')}">10 Apr 2025</td>
+					<td>
+						<a th:href="@{'/posts/edit/' + ${post.id}}" class="action-btn edit-btn">Edit</a>
+						<a th:href="@{'/posts/delete/' + ${post.id}}"
+							onclick="return confirm('Are you sure you want to delete this post?')"
+							class="action-btn delete-btn">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

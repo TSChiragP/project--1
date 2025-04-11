@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.sample.core.domain.CustomUserDetails;
 import com.sample.core.domain.Users;
 import com.sample.core.repository.UserRepository;
 
@@ -22,7 +23,8 @@ public class UserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Users user = userRepository.findByEmail(username);
 		if (Objects.nonNull(user)) {
-			return User.builder().username(user.getUserName()).password(user.getPassword())
+//			new CustomUserDetails(user);
+			return User.builder().username(user.getEmail()).password(user.getPassword())
 					.roles(getRoles(user.getRoles())).build();
 
 		}

@@ -32,11 +32,31 @@
 			color: #cccccc;
 			margin-top: 10px;
 		}
+
+		.logout-btn {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			background-color: #ffaa00;
+			color: #1e1e2f;
+			padding: 10px 20px;
+			border-radius: 8px;
+			font-weight: bold;
+			text-decoration: none;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+			transition: background-color 0.3s ease;
+			z-index: 9999;
+		}
+
+		.logout-btn:hover {
+			background-color: #ffbb33;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="container">
+		<a href="/logout" class="logout-btn">Logout</a>
 		<h1>User Home Page</h1>
 		<p>Welcome back! You're logged in as a regular user.</p>
 	</div>

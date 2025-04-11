@@ -33,8 +33,8 @@ public class SecurityConfiguration {
 			request.requestMatchers(ADMIN_URLS).hasRole("ADMIN");
 			request.requestMatchers(USER_URLS).hasAnyRole("USER", "ADMIN");
 			request.anyRequest().authenticated();
-		}).formLogin(formLogin -> formLogin.loginPage("/login").successHandler(new AuthenticationSuccessHandler())
-				.permitAll()).build();
+		}).formLogin(formLogin -> formLogin.loginPage("/login").permitAll()) // .defaultSuccessUrl("/post")
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login")).build();
 	}
 
 	@Bean
