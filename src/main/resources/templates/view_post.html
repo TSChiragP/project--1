@@ -105,15 +105,18 @@
 	<div class="container">
 		<div class="header">
 			<h1 class="post-title" th:text="${post.title}">Post Title</h1>
-			<div class="action-buttons">
-				<a th:href="@{'/posts/edit/' + ${post.id}}" class="edit-btn">Edit</a>
-				<a th:href="@{'/posts/delete/' + ${post.id}}"
-					onclick="return confirm('Are you sure you want to delete this post?')" class="delete-btn">Delete</a>
+			<div th:if="${user != null}">
+				<div class="action-buttons">
+					<a th:href="@{'/posts/edit/' + ${post.id}}" class="edit-btn">Edit</a>
+					<a th:href="@{'/posts/delete/' + ${post.id}}"
+						onclick="return confirm('Are you sure you want to delete this post?')"
+						class="delete-btn">Delete</a>
+				</div>
 			</div>
 		</div>
 
 		<div class="meta">
-			<span>By <strong>Author Name</strong></span> |
+			<span>By <strong th:text="${post.author.userName}">Author Name</strong></span> |
 			<span th:text="${#temporals.format(post.createdAt, 'dd MMM yyyy HH:mm')}">Date</span>
 		</div>
 

@@ -56,7 +56,12 @@ public class PostController {
 	}
 
 	@GetMapping("/posts/{postId}")
-	private String viewPosts(Model model, @PathVariable Integer postId) throws PostNotFoundException {
+	private String viewPosts(Model model, @PathVariable Integer postId, Principal principal)
+			throws PostNotFoundException, UserNotFoundException {
+		if (Objects.nonNull(principal)) {
+			Users user = userService.getUser(principal.getName());
+			model.addAttribute("user", user);
+		}
 		Posts postData = postService.getPostData(postId);
 
 		model.addAttribute("post", postData);
