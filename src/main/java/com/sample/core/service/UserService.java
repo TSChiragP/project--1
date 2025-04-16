@@ -1,5 +1,6 @@
 package com.sample.core.service;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,9 @@ public class UserService {
 
 	public Users getUserById(Integer userId) throws UserNotFoundException {
 		return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found !!"));
+	}
+
+	public List<Users> getAllUsers() {
+		return userRepository.findAll();
 	}
 }

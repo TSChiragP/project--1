@@ -31,7 +31,8 @@ public class SecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
 		return httpSecurity.csrf(csrf -> csrf.disable())
-				//.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				// .sessionManagement(session ->
+				// session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(request -> {
 					request.requestMatchers(NON_AUTHENTICATED_URLS).permitAll();
 					request.requestMatchers(HttpMethod.GET, "/posts/**").permitAll();

@@ -1,5 +1,7 @@
 package com.sample.core.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,5 +25,14 @@ public class UserController {
 
 		model.addAttribute("user", user);
 		return "view_profile";
+	}
+
+	@GetMapping("/users")
+	public String getAllUsers(Model model) {
+
+		List<Users> users = userService.getAllUsers();
+
+		model.addAttribute("users", users);
+		return "all_user";
 	}
 }

@@ -69,16 +69,16 @@ public class PostController {
 	}
 
 	@PostMapping("/addPost")
-	private String addPosts(@ModelAttribute Posts post, Principal principal) throws UserNotFoundException {
+	private String addPosts(@ModelAttribute Posts post) throws UserNotFoundException {
 
-		postService.addPost(post, principal.getName());
+		postService.addPost(post);
 		return "redirect:/";
 	}
 
 	@GetMapping("/posts/delete/{postId}")
 	private String deletePosts(@PathVariable Integer postId, Principal principal)
 			throws PostNotFoundException, CustomAccessDeniedException {
-		postService.deletePost(postId, principal);
+		postService.deletePost(postId);
 		return "redirect:/";
 	}
 
@@ -90,7 +90,8 @@ public class PostController {
 	}
 
 	@PostMapping("/posts/{postId}")
-	private String editPost(@PathVariable Integer postId, @ModelAttribute Posts post) throws PostNotFoundException {
+	private String editPost(@PathVariable Integer postId, @ModelAttribute Posts post)
+			throws PostNotFoundException, CustomAccessDeniedException, UserNotFoundException {
 		postService.editPost(postId, post);
 		return "redirect:/";
 	}
