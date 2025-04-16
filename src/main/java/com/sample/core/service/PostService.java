@@ -64,14 +64,18 @@ public class PostService {
 
 	}
 
-	public void deletePost(Integer postId) throws PostNotFoundException, CustomAccessDeniedException {
+	public void deletePost(Integer postId)
+			throws PostNotFoundException, CustomAccessDeniedException, UserNotFoundException {
 		Posts post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found !!"));
 		String username = this.getUsernameFromPrincipal();
-
-		if (Objects.nonNull(username) && post.getAuthor().getEmail().equals(username)) {
-			postRepository.deleteById(postId);
-		} else {
-			throw new CustomAccessDeniedException("You dont have access to delete this post");
+		if (Objects.nonNull(username)) {
+			Users user = userService.getUser(username);
+			if (Arrays.asList(user.getRoles().split(",")).contains("ADMIN")
+					|| post.getAuthor().getEmail().equals(username)) {
+				postRepository.deleteById(postId);
+			} else {
+				throw new CustomAccessDeniedException("You dont have access to delete this post");
+			}
 		}
 	}
 

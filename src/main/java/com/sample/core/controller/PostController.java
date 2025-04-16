@@ -77,7 +77,7 @@ public class PostController {
 
 	@GetMapping("/posts/delete/{postId}")
 	private String deletePosts(@PathVariable Integer postId, Principal principal)
-			throws PostNotFoundException, CustomAccessDeniedException {
+			throws PostNotFoundException, CustomAccessDeniedException, UserNotFoundException {
 		postService.deletePost(postId);
 		return "redirect:/";
 	}
