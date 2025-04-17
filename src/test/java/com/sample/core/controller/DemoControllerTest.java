@@ -65,4 +65,10 @@ public class DemoControllerTest {
 		mockMvc.perform(get("/admin/home")).andExpect(status().isOk());
 	}
 
+	@Test
+	void getLoginPageTest() throws Exception {
+
+		mockMvc.perform(get("/login")).andExpect(status().isOk());
+	}
+
 }

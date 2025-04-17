@@ -1,7 +1,6 @@
 package com.sample.core.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,14 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -171,7 +165,7 @@ public class PostServiceTest {
 
 		when(postRepository.findById(1)).thenReturn(Optional.of(dummyPost));
 		when(userService.getUser(authorUsername)).thenReturn(dummyUser);
-		this.mockSecurityContextHolder(authorUsername, "USER");
+		this.mockSecurityContextHolder(authorUsername, "ROLE_USER");
 		when(postRepository.save(dummyPost)).thenReturn(updatedPost);
 		postService.editPost(1, updatedPost);
 
@@ -188,7 +182,7 @@ public class PostServiceTest {
 
 		Users dummyUser = getDummyUser(1, "test@gmail.com", "USER");
 		when(userService.getUser("test@gmail.com")).thenReturn(dummyUser);
-		this.mockSecurityContextHolder("test@gmail.com", "USER");
+		this.mockSecurityContextHolder("test@gmail.com", "ROLE_USER");
 		when(postRepository.findById(1)).thenReturn(Optional.of(dummyPost));
 		assertThrows(CustomAccessDeniedException.class, () -> {
 			postService.editPost(1, updatedPost);
