@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 	@Autowired
 	UserDetailService userDetailService;
 
-	private static String[] NON_AUTHENTICATED_URLS = { "/", "/register/user", "/home" };
+	private static String[] NON_AUTHENTICATED_URLS = { "/", "/register/user", "/home","/h2-console" };
 	private static String[] ADMIN_URLS = { "/admin/**" };
 	private static String[] USER_URLS = { "/user/**" };
 
