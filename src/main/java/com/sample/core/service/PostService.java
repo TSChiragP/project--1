@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,27 +20,36 @@ import com.sample.core.exception.PostNotFoundException;
 import com.sample.core.exception.UserNotFoundException;
 import com.sample.core.repository.PostRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class PostService {
 
 	@Autowired
 	PostRepository postRepository;
 
+	private final Logger logger = LoggerFactory.getLogger(PostService.class);
+
 	@Autowired
 	UserService userService;
 
 	public List<Posts> getAllPosts() {
+		logger.info("GETTING ALL POSTS");
 		return postRepository.findAllByOrderByCreatedAtDesc();
 
 	}
 
 	public Posts addPost(Posts post) throws UserNotFoundException {
+		logger.info("STARTING ADDING POST");
 		String username = getUsernameFromPrincipal();
 		if (Objects.nonNull(username)) {
 			Users user = userService.getUser(username);
 			post.setCreatedAt(LocalDateTime.now());
 			post.setAuthor(user);
-			return postRepository.save(post);
+			Posts savedPost = postRepository.save(post);
+			logger.info("POST SAVE POST WITH ID : " + savedPost.getId());
+			return savedPost;
 		} else {
 			throw new UserNotFoundException("User not found with username : " + username);
 		}
@@ -46,9 +57,11 @@ public class PostService {
 
 	public void editPost(Integer postId, Posts post)
 			throws PostNotFoundException, CustomAccessDeniedException, UserNotFoundException {
+		log.info("EDITING A POST WITH ID : " + post.getId());
 
 		Posts oldPost = postRepository.findById(postId)
 				.orElseThrow(() -> new PostNotFoundException("Post not found !!"));
+		log.info("OLD POST FOUND");
 		String username = getUsernameFromPrincipal();
 		if (Objects.nonNull(username)) {
 			Users user = userService.getUser(username);
@@ -57,6 +70,7 @@ public class PostService {
 				oldPost.setTitle(post.getTitle());
 				oldPost.setContent(post.getContent());
 				postRepository.save(oldPost);
+				log.info("POST EDITED AND SAVED");
 			} else {
 				throw new CustomAccessDeniedException("You dont have access to edit this post");
 			}
