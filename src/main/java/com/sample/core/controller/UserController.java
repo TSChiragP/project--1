@@ -2,7 +2,6 @@ package com.sample.core.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,11 @@ import com.sample.core.service.UserService;
 @Controller
 public class UserController {
 
-	@Autowired
-	UserService userService;
+	private final UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("/profile/{userId}")
 	public String viewProfile(Model model, @PathVariable Integer userId) throws UserNotFoundException {

@@ -21,11 +21,14 @@ import jakarta.validation.Valid;
 @RestController
 public class MainController {
 
-	@Autowired
-	IBookService bookService;
+	private final IBookService bookService;
 
 	@Autowired
 	RestTemplate restTemplate;
+
+	public MainController(IBookService bookService) {
+		this.bookService = bookService;
+	}
 
 //	@GetMapping("/")
 //	public ResponseEntity<Book> demo() {

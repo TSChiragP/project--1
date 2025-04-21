@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +22,7 @@ public class SecurityConfiguration {
 	@Autowired
 	UserDetailService userDetailService;
 
-	private static String[] NON_AUTHENTICATED_URLS = { "/", "/register/user", "/home","/h2-console" };
+	private static String[] NON_AUTHENTICATED_URLS = { "/", "/register/user", "/home", "/h2-console" };
 	private static String[] ADMIN_URLS = { "/admin/**" };
 	private static String[] USER_URLS = { "/user/**" };
 

@@ -1,6 +1,5 @@
 package com.sample.core.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +13,14 @@ import jakarta.validation.Valid;
 @RestController
 public class RegistrationController {
 
-	@Autowired
-	UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	@Autowired
-	PasswordEncoder bCryptPasswordEncoder;
+	private final PasswordEncoder bCryptPasswordEncoder;
+
+	public RegistrationController(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
+		this.userRepository = userRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 
 	@PostMapping("/register/user")
 	public Users registerUser(@Valid @RequestBody Users user) {

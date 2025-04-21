@@ -1,9 +1,7 @@
 package com.sample.core.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sample.core.domain.Book;
@@ -13,8 +11,11 @@ import com.sample.core.repository.BookRepository;
 @Service
 public class BookServiceImpl implements IBookService {
 
-	@Autowired
-	BookRepository bookRepository;
+	private final BookRepository bookRepository;
+
+	public BookServiceImpl(BookRepository bookRepository) {
+		this.bookRepository = bookRepository;
+	}
 
 	@Override
 	public Book addBook(Book book) {

@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,13 +25,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PostService {
 
-	@Autowired
-	PostRepository postRepository;
+	private final PostRepository postRepository;
+
+	private final UserService userService;
 
 	private final Logger logger = LoggerFactory.getLogger(PostService.class);
 
-	@Autowired
-	UserService userService;
+	public PostService(PostRepository postRepository, UserService userService) {
+		this.postRepository = postRepository;
+		this.userService = userService;
+	}
 
 	public List<Posts> getAllPosts() {
 		logger.info("GETTING ALL POSTS");

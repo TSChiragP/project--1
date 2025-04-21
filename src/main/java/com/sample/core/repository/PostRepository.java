@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sample.core.domain.Posts;
-import com.sample.core.domain.Users;
 
 @Repository
 public interface PostRepository extends JpaRepository<Posts, Integer> {

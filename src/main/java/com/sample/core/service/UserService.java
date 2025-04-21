@@ -3,7 +3,6 @@ package com.sample.core.service;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sample.core.domain.Users;
@@ -13,8 +12,11 @@ import com.sample.core.repository.UserRepository;
 @Service
 public class UserService {
 
-	@Autowired
-	UserRepository userRepository;
+	private final UserRepository userRepository;
+
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public Users getUser(String username) throws UserNotFoundException {
 		Users user = userRepository.findByEmail(username);

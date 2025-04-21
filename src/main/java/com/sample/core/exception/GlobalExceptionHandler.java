@@ -1,6 +1,5 @@
 package com.sample.core.exception;
 
-import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 

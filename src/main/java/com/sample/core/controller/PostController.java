@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,25 +17,20 @@ import com.sample.core.exception.CustomAccessDeniedException;
 import com.sample.core.exception.PostNotFoundException;
 import com.sample.core.exception.UserNotFoundException;
 import com.sample.core.repository.PostRepository;
-import com.sample.core.repository.UserRepository;
 import com.sample.core.service.PostService;
 import com.sample.core.service.UserService;
 
 @Controller
 public class PostController {
 
-	private final UserRepository userRepository;
-	@Autowired
-	PostRepository postRepository;
+	private final PostRepository postRepository;
+	private final PostService postService;
+	private final UserService userService;
 
-	@Autowired
-	PostService postService;
-
-	@Autowired
-	UserService userService;
-
-	PostController(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	PostController(PostRepository postRepository, PostService postService, UserService userService) {
+		this.postRepository = postRepository;
+		this.postService = postService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/")
