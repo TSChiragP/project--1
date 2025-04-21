@@ -33,7 +33,7 @@ import com.sample.core.exception.UserNotFoundException;
 import com.sample.core.repository.PostRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class PostServiceTest {
+class PostServiceTest {
 
 	@Mock
 	PostRepository postRepository;
