@@ -34,7 +34,7 @@ public class PostController {
 	}
 
 	@GetMapping("/")
-	private String getPosts(Model model, Principal principal) throws UserNotFoundException {
+	public String getPosts(Model model, Principal principal) throws UserNotFoundException {
 		if (Objects.nonNull(principal)) {
 			Users user = userService.getUser(principal.getName());
 			model.addAttribute("user", user);
@@ -45,12 +45,12 @@ public class PostController {
 	}
 
 	@GetMapping("/addPost")
-	private String addPostsView() {
+	public String addPostsView() {
 		return "add_post";
 	}
 
 	@GetMapping("/posts/{postId}")
-	private String viewPosts(Model model, @PathVariable Integer postId, Principal principal)
+	public String viewPosts(Model model, @PathVariable Integer postId, Principal principal)
 			throws PostNotFoundException, UserNotFoundException {
 		if (Objects.nonNull(principal)) {
 			Users user = userService.getUser(principal.getName());
@@ -63,35 +63,35 @@ public class PostController {
 	}
 
 	@PostMapping("/addPost")
-	private String addPosts(@ModelAttribute Posts post) throws UserNotFoundException {
+	public String addPosts(@ModelAttribute Posts post) throws UserNotFoundException {
 
 		postService.addPost(post);
 		return "redirect:/";
 	}
 
 	@GetMapping("/posts/delete/{postId}")
-	private String deletePosts(@PathVariable Integer postId, Principal principal)
+	public String deletePosts(@PathVariable Integer postId, Principal principal)
 			throws PostNotFoundException, CustomAccessDeniedException, UserNotFoundException {
 		postService.deletePost(postId);
 		return "redirect:/";
 	}
 
 	@GetMapping("/posts/edit/{postId}")
-	private String editPostsView(Model model, @PathVariable Integer postId) throws PostNotFoundException {
+	public String editPostsView(Model model, @PathVariable Integer postId) throws PostNotFoundException {
 		Posts post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found !!"));
 		model.addAttribute("post", post);
 		return "edit_post";
 	}
 
 	@PostMapping("/posts/{postId}")
-	private String editPost(@PathVariable Integer postId, @ModelAttribute Posts post)
+	public String editPost(@PathVariable Integer postId, @ModelAttribute Posts post)
 			throws PostNotFoundException, CustomAccessDeniedException, UserNotFoundException {
 		postService.editPost(postId, post);
 		return "redirect:/";
 	}
 
 	@GetMapping("/myPost/{userId}")
-	private String getMyPosts(@PathVariable Integer userId, Model model) {
+	public String getMyPosts(@PathVariable Integer userId, Model model) {
 		List<Posts> myPosts = postService.getMyPosts(userId);
 		model.addAttribute("userPosts", myPosts);
 		return "my_posts";
