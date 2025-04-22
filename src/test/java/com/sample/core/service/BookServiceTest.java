@@ -2,6 +2,7 @@ package com.sample.core.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sample.core.domain.Book;
+import com.sample.core.exception.BookNotFoundException;
 import com.sample.core.repository.BookRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,6 +59,12 @@ class BookServiceTest {
 		bookService.getBook(1);
 		assertNotNull(book);
 		assertEquals(1, book.getId());
+	}
+
+	@Test
+	void getBookShouldThrowExceptionTest() {
+
+		assertThrows(BookNotFoundException.class, () -> bookService.getBook(1));
 	}
 
 	@Test
